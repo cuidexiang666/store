@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>所有分类信息</title>
+		<!-- <link rel="stylesheet" type="text/css" href="../css/easyui.css">
+		<link rel="stylesheet" type="text/css" href="../css/icon.css">
+		<script type="text/javascript" src="../js/jquery.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.easyui.min.js"></script> -->
+	</head>
+	<body>
+		<!-- 所有分类数据表格 -->
+		<table id="allCategorys"></table>
+
+		<!-- 工具条 -->
+		<div id="tb" style="padding:2px 15px;">
+			<a href="javascript:void(0);" onclick="addCategory()" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true"/a>
+			<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true"/a>
+			<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-save',plain:true"/a>
+			<a href="javascript:void(0);" class="easyui-linkbutton" data-options="iconCls:'icon-cut',plain:true"/a>
+			<a href="javascript:void(0);"  class="easyui-linkbutton" data-options="iconCls:'icon-remove',plain:true"/a>
+		</div>
+		
+		<!-- 添加分类对话框 -->
+		<div id="addCategoryDialog"></div> 
+		
+		<!-- 修改分类信息对话框 -->
+		<div id="editCategoryDialog"></div>
+		
+		<script type="text/javascript">
+			$(function(){
+				//显示所有分类信息	
+				$('#allCategorys').datagrid({    
+				    url:'/day30/ProductServlet?method=findAllCategory',    
+				    columns:[[    
+				        {field:'cid',title:'商品编号',width:100,align:'center'},    
+				        {field:'cname',title:'商品名称',width:100,align:'center'},    
+				        {field:'options',title:'操作',width:100,align:'center',
+				        	//formatter:function(value,rows,index)
+							//参数value 代表该fileld对应的值
+							//参数rows 代表该行中所有的json值{"cid":"100","cname":"手机数码"}
+							//参数index 索引 行的索引
+							formatter:function(value,rows,index){
+								var content = '<a href="javascript:void(0);" onclick="editCategory(\''+rows.cid+'\')">编辑</a>';
+								content+='&nbsp;&nbsp;<a href="javascript:void(0);" onclick="delCategory(\''+rows.cid+'\')">删除</a>';
+								return content;
+							}
+				        }    
+				    ]],
+				    fit:true,
+				  	toolbar:"#tb"
+				}); 
+			});
+			
+			function addCategory(){
+				//添加分类对话框
+				$('#addCategoryDialog').dialog({    
+				  	title: '添加分类信息',    
+				    width: 400,    
+				    height: 200,    
+				    closed: false,    
+				    href: 'category_add.html',    
+				    modal: true    
+				});    
+			};
+			
+			//删除分类
+			function delCategory(cid){
+				$.messager.confirm('确认','您确认想要删除记录吗？',function(r){    
+				    if (r){    
+				        //alert('确认删除'); 
+				        $.post(
+				        		"/day30/ProductServlet",
+				        		{cid:cid,method:"delCategory"},
+				        		function(data){
+				        			//alert(data);
+				        			if (data=="true") {
+				        				$.messager.show({
+				        					title:'删除分类成功',
+				        					msg:'消息将在3秒后关闭。',
+				        					timeout:3000,
+				        					showType:'slide'
+				        				});
+										$("#allCategorys").datagrid('reload');
+									}
+				        		},"text"
+				        );
+				    }    
+				}); 
+			}
+			//修改分类
+			function editCategory(cid){
+				gbcid=cid;
+				$("#editCategoryDialog").dialog({    
+				    title: '修改分类信息',    
+				    width: 400,    
+				    height: 200,    
+				    closed: false,
+				    //指向一个添加分类信息的页面(表单)
+				    href: 'category_edit.html',    
+				    modal: true //模态，如果当前的对话框显示，其它地方不可点击的  
+				}); 
+			}
+			
+		</script>
+	</body>
+</html>

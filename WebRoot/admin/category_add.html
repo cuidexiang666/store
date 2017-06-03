@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+	</head>
+	<body>
+		<!-- 添加分类表单 -->
+		<div style="padding:20px;text-align: center;">
+			<form id="addCategoryForm" action="/day30/ProductServlet" method="post">
+				<input type="hidden" name="method" value="addCategory">
+		    	<table cellpadding="15">
+		    		<tr>
+		    			<td>分类名称:</td>
+		    			<td><input class="easyui-textbox" type="text" name="cname"></input></td>
+		    		</tr>
+		    	</table>
+		    </form>
+		    <div style="text-align:center;padding:5px">
+		    	<a href="javascript:void(0)" class="easyui-linkbutton" onclick="submitCategoryForm()">添加</a>
+		    	<a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">取消</a>
+		    </div>
+	    </div>
+	    
+	    
+	    <!-- 添加分类 -->
+	    <script type="text/javascript">
+	    function submitCategoryForm(){
+	    	$('#addCategoryForm').form('submit', {    
+	    	    success:function(data){    
+	    	        //alert(data) 
+	    	        if (data=="true") {
+	    	        	$('#addCategoryDialog').dialog('close');
+	    	        	$.messager.show({
+	    	        		title:'添加分类成功',
+	    	        		msg:'消息将在3秒后关闭。',
+	    	        		timeout:3000,
+	    	        		showType:'slide'
+	    	        	});
+	    	        	$('#allCategorys').datagrid('reload'); 
+					}
+	    	    }    
+	    	});  
+	    }
+	    </script>
+	</body>
+</html>

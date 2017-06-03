@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Insert title here</title>
+		<link rel="stylesheet" type="text/css" href="../css/easyui.css">
+		<link rel="stylesheet" type="text/css" href="../css/icon.css">
+		<script type="text/javascript" src="../js/jquery.min.js"></script>
+		<script type="text/javascript" src="../js/jquery.easyui.min.js"></script>
+		<style type="text/css">
+			a{
+				text-decoration: none
+			}
+		</style>
+		<script type="text/javascript">
+			function findAllCategorys(title,url) {
+				//alert(111);
+				var exist = $("#tt").tabs('exists',title);
+				if (exist) {
+					$("#tt").tabs('getTab',title)
+				}else{
+					$('#tt').tabs('add',{
+						title: title,
+						selected: true,
+						closable:true,
+						href:url
+					});
+				}
+			}
+		</script>
+	</head>
+	<body class="easyui-layout">   
+	   <div id="cc" class="easyui-layout" data-options="fit:true,border:0">   
+	    <div data-options="region:'north',title:'North Title',split:true" style="height:100px;">
+	    	<h1 style="text-align:center">欢迎进入传智网上商城后台管理系统</h1>
+	    </div>   
+	    <div data-options="region:'south',title:'South Title',split:true" style="height:100px;"></div>   
+	    <div data-options="region:'west',title:'West',split:true" style="width:150px;">
+	    <div id="aa" class="easyui-accordion" data-options="fit:true,border:0">   
+		    <div title="Title1" data-options="iconCls:'icon-save'" style="overflow:auto;padding:10px;">   
+		    	content1  
+		    </div>   
+		    <div title="Title2" data-options="iconCls:'icon-reload'" style="padding:10px;">   
+		        content2    
+		    </div>   
+		    <div title="Title3" data-options="selected:true">   
+		        <ul id="ttt" class="easyui-tree">   
+				    <li>   
+				        <span>后台管理</span>   
+				        <ul>   
+				            <li>   
+				                <span>分类操作</span>   
+				                <ul>   
+				                    <li>   
+				                        <span><a href="javascript:void(0);" onclick=findAllCategorys("所有分类信息","category_list.html")>查询分类</a></span>   
+				                    </li>   
+				                    <li>   
+				                        <span><a href="javascript:void(0);">添加分类</a></span>   
+				                    </li>   
+				                    <li>   
+				                        <span><a href="javascript:void(0);">删除分类</a></span>   
+				                    </li>   
+				                    <li>   
+				                        <span><a href="javascript:void(0);">修改分类</a></span>   
+				                    </li>   
+				                </ul>   
+				            </li>   
+				        </ul>   
+				    </li>   
+				</ul>   
+		    </div>   
+		</div>
+	    </div>   
+	    <div data-options="region:'center',title:'center title'" style="padding:5px;background:#eee;">
+	    	<div id="tt" class="easyui-tabs" data-options="fit:true">   
+			    <div title="欢迎" style="padding:20px;">   
+			           	 所有的数据表
+			    </div>   
+			</div> 
+	    </div>   
+	</div>  
+	</body> 
+</html>

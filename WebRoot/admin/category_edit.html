@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>修改分类信息</title>
+	</head>
+	<body>
+		<div style="padding:20px;text-align: center;">
+			<form id="editCategoryForm" action="/day30/ProductServlet" method="post">
+				<input type="hidden" name="method" value="modifyCategory">
+				<!-- cid的值load方法返回json自动填充的 -->
+				<input type="hidden" name="cid">
+				
+		    	<table cellpadding="15">
+		    		<tr>
+		    			<td>分类名称:</td>
+		    			<td><input class="easyui-textbox" type="text" name="cname"></input></td>
+		    		</tr>
+		    	</table>
+		    </form>
+		    <div style="text-align:center;padding:5px">
+		    	<a href="javascript:void(0)" class="easyui-linkbutton" onclick="editCategoryForm()">修改</a>
+		    	<a href="javascript:void(0)" class="easyui-linkbutton" onclick="clearForm()">取消</a>
+		    </div>
+	    </div>
+	    
+	    <!-- 页面加载，先查，让其回显数据 -->
+	    <script type="text/javascript">
+	    	$(function(){
+		    	$("#editCategoryForm").form('load','/day30/ProductServlet?method=findCategoryBycid&cid='+gbcid);
+	    	});
+		    function editCategoryForm(){
+			    //alert(111);
+		    	//提交表单
+	    		$("#editCategoryForm").form('submit', {
+	    			//提交成功
+	    			success: function(data){
+	    				if(data=="true"){
+		    				//alert("aaa");
+		    				//关闭对话框
+		    				$("#editCategoryDialog").dialog('close');
+		    				//给出修改成功过的消息提示框
+		    				$.messager.show({
+		    					title:'修改分类信息成功的消息框',
+		    					msg:'消息将在3秒后关闭。',
+		    					timeout:3000,
+		    					showType:'slide'
+		    				});
+							//让显示分类信息的数据表格重新加载
+							$("#allCategorys").datagrid('reload');
+	    				}
+	    			}
+		    	});
+		    }
+	    </script>
+	</body>
+</html>
